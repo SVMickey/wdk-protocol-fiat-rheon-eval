@@ -1,0 +1,57 @@
+{
+  "transactionId": "txn_01m3282zg0baezckbjjcdaby6z",
+  "product": "bank_onramp",
+  "routeId": "rte_01m3282v8k3q0d6f2g7h9j4k5m",
+  "provider": "example_bank",
+  "quoteId": "qte_01m3282zehrspkkjakv9k20pay",
+  "customerId": "cus_01m3282x4v7c0m8h3n9k2q7f5e",
+  "status": "completed",
+  "instructions": null,
+  "sourceAmount": {
+    "amount": "25.00",
+    "asset": {
+      "code": "EUR"
+    }
+  },
+  "expectedDeliveredAmount": {
+    "amount": "27.445876",
+    "asset": {
+      "code": "USDC",
+      "chain": "base-sepolia",
+      "contract": "0xd25F95273291F9108A500844050A43bc5f42d74F"
+    }
+  },
+  "totalFee": {
+    "amount": "1.03",
+    "asset": {
+      "code": "EUR"
+    }
+  },
+  "deliveredAmount": {
+    "amount": "27.445876",
+    "asset": {
+      "code": "USDC",
+      "chain": "base-sepolia",
+      "contract": "0xd25F95273291F9108A500844050A43bc5f42d74F"
+    }
+  },
+  "destination": {
+    "walletAddress": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "chain": "base-sepolia"
+  },
+  "source": null,
+  "deliveryProof": {
+    "type": "onchain",
+    "chain": "base-sepolia",
+    "transactionHash": "0x4f1c2b7e9a3d5c8f0b6e2a4d7c9f1e3b5a8d0c2f4e6a9b1d3c5e7f9a2b4c6d8e"
+  },
+  "failureReason": null,
+  "fundsNotice": null,
+  "sync": {
+    "state": "fresh",
+    "lastKnownStatus": "completed",
+    "lastSyncedAt": "2026-09-24T12:14:31.000Z"
+  },
+  "createdAt": "2026-09-24T12:00:55.900Z",
+  "updatedAt": "2026-09-24T12:14:31.000Z"
+}

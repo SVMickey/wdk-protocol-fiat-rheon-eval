@@ -1,0 +1,32 @@
+{
+  "transactionId": "txn_01m3283c7d8e9f0g1h2j3k4m5n",
+  "status": "action_required",
+  "instructions": {
+    "type": "present_apple_pay",
+    "amount": "100.00",
+    "currency": "USD",
+    "merchantCountryCode": "LT",
+    "processorName": "Example Processor",
+    "supportedNetworks": ["visa", "masterCard"],
+    "merchantCapabilities": ["supports3DS", "supportsCredit", "supportsDebit"],
+    "requiredBillingContactFields": ["postalAddress", "name"],
+    "requiredShippingContactFields": ["email"],
+    "termsLinks": [
+      { "name": "Example Processor Terms of Service", "url": "https://processor.example/terms" },
+      { "name": "Example Processor Privacy Policy", "url": "https://processor.example/privacy" }
+    ],
+    "expiresAt": "2026-10-02T12:03:00.000Z",
+    "submit": {
+      "method": "POST",
+      "path": "/v1/transactions/txn_01m3283c7d8e9f0g1h2j3k4m5n/apple-pay"
+    }
+  },
+  "deliveredAmount": null,
+  "destination": {
+    "walletAddress": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "chain": "base-sepolia"
+  },
+  "source": null,
+  "deliveryProof": null,
+  "statusUrl": "/v1/transactions/txn_01m3283c7d8e9f0g1h2j3k4m5n"
+}

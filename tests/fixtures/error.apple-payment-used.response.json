@@ -1,0 +1,15 @@
+{
+  "error": {
+    "code": "invalid_state",
+    "message": "This Apple Pay payment was already submitted for another transaction",
+    "requestId": "req_01m3282zfq2c4n6r8t0v2x4z6b",
+    "details": {
+      "reason": "apple_payment_already_used"
+    },
+    "retry": {
+      "safe": false,
+      "afterMs": null,
+      "action": "none"
+    }
+  }
+}

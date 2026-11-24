@@ -1,0 +1,34 @@
+{
+  "error": {
+    "code": "identity_required",
+    "message": "The customer is not ready for this route",
+    "requestId": "req_01m3282zfq2c4n6r8t0v2x4z6c",
+    "details": {
+      "routeId": "rte_01m3282v8k3q0d6f2g7h9j4k5m",
+      "provider": "example_bank",
+      "customerId": null,
+      "status": "action_required",
+      "checks": {
+        "kyc": "required"
+      },
+      "missing": [
+        "externalId",
+        "contact.firstName",
+        "contact.lastName",
+        "contact.email",
+        "contact.country",
+        "contact.employmentStatus"
+      ],
+      "nextAction": {
+        "type": "create_customer",
+        "endpoint": "POST /v1/customers"
+      },
+      "identity": []
+    },
+    "retry": {
+      "safe": false,
+      "afterMs": null,
+      "action": "none"
+    }
+  }
+}

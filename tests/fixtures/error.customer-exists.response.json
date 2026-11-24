@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "customer_exists",
+    "message": "A customer with this externalId already exists",
+    "requestId": "req_...",
+    "details": { "customerId": "cus_...", "externalId": "your-user-id" },
+    "retry": { "safe": false, "afterMs": null, "action": "use_existing" }
+  }
+}

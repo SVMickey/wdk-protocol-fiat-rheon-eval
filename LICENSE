@@ -1,0 +1,22 @@
+Rheon Evaluation License
+
+Copyright (c) 2026 Rheon. All rights reserved.
+
+This software, wdk-protocol-fiat-rheon (the source code, documentation, examples and any packaged form of
+them, the "Software"), is licensed, not sold, to Tether and its affiliates ("Tether") on the terms below.
+
+1. Evaluation only. Tether may install, run, copy and modify the Software internally, solely to evaluate
+   and test it with Rheon's sandbox.
+
+2. Restrictions. Tether may not distribute, sublicense, publish, sell or otherwise make the Software or any
+   modified version of it available to any third party (including through a public repository or package
+   registry), and may not use it in production, with real funds or with real end users.
+
+3. Reserved rights. All rights not expressly granted here are reserved by Rheon. No other licence is
+   granted, whether by implication, estoppel or otherwise.
+
+4. Termination. This licence ends when Rheon gives notice, or when the parties sign another agreement that
+   covers the Software. Tether then stops using the Software and deletes its copies.
+
+5. No warranty. The Software is provided "as is", without warranty of any kind. To the extent permitted by
+   law, Rheon is not liable for any damage arising from its use.

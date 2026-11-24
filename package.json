@@ -1,0 +1,58 @@
+{
+  "name": "wdk-protocol-fiat-rheon",
+  "version": "1.0.0-beta.1",
+  "description": "Rheon module for WDK (Wallet Development Kit) by Tether: widget buy and sell links, quotes, order status and native Apple Pay.",
+  "keywords": [
+    "wdk",
+    "protocol",
+    "fiat",
+    "rheon",
+    "apple-pay",
+    "on-ramp"
+  ],
+  "author": "Rheon",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "main": "index.js",
+  "type": "module",
+  "types": "./types",
+  "scripts": {
+    "build:types": "tsc",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
+  },
+  "dependencies": {
+    "@tetherto/wdk-wallet": "^1.0.0-beta.26",
+    "bare-node-runtime": "^1.5.2"
+  },
+  "devDependencies": {
+    "cross-env": "7.0.3",
+    "jest": "30.1.3",
+    "standard": "17.1.2",
+    "typescript": "5.8.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "bare": "./bare.js",
+      "default": "./index.js"
+    },
+    "./package": {
+      "default": "./package.json"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "bare.js",
+      "tests/**/*.js"
+    ]
+  },
+  "files": [
+    "index.js",
+    "bare.js",
+    "src",
+    "types"
+  ]
+}

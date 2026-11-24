@@ -1,0 +1,38 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - name: Types are up to date
+        run: rm -rf types && npx tsc && git diff --exit-code -- types
+      - run: npm test
+      - name: Packed package compiles in a strict TypeScript consumer
+        run: |
+          npm pack --pack-destination "$RUNNER_TEMP"
+          mkdir "$RUNNER_TEMP/consumer"
+          cp tests/types/consumer.mts "$RUNNER_TEMP/consumer/"
+          cd "$RUNNER_TEMP/consumer"
+          npm init -y >/dev/null
+          npm install --no-audit "$RUNNER_TEMP"/wdk-protocol-fiat-rheon-*.tgz
+          "$GITHUB_WORKSPACE/node_modules/.bin/tsc" --strict --module NodeNext --moduleResolution NodeNext --target ES2022 --noEmit consumer.mts

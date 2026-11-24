@@ -1,0 +1,15 @@
+{
+  "error": {
+    "code": "permission_denied",
+    "message": "Simulated deposits exist only in the sandbox: use a sandbox key. Nothing was sent.",
+    "requestId": "req_01m3282zfq2c4n6r8t0v2x4z6b",
+    "details": {
+      "reason": "sandbox_only"
+    },
+    "retry": {
+      "safe": false,
+      "afterMs": null,
+      "action": "none"
+    }
+  }
+}

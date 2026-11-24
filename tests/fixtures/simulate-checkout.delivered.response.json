@@ -1,0 +1,9 @@
+{
+  "simulationId": "csm_01m4c3pb2f6h8j1k4m7n9p3r5s",
+  "transactionId": "txn_01m3282zg0baezckbjjcdaby6z",
+  "outcome": "delivered",
+  "status": "completed",
+  "simulated": true,
+  "transactionUrl": "/v1/transactions/txn_01m3282zg0baezckbjjcdaby6z",
+  "createdAt": "2026-10-12T12:31:00.000Z"
+}

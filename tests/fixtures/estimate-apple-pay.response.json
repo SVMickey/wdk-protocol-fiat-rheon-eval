@@ -1,0 +1,28 @@
+{
+  "routeId": "rte_01m3283a1b2c3d4e5f6g7h8j9k",
+  "provider": "example_pay",
+  "product": "apple_pay_onramp",
+  "exactMode": "exact_in",
+  "sourceAmount": {
+    "amount": "100.00",
+    "asset": {
+      "code": "USD"
+    }
+  },
+  "expectedDeliveredAmount": {
+    "amount": "95.120000",
+    "asset": {
+      "code": "USDC",
+      "chain": "base-sepolia",
+      "contract": "0xd25F95273291F9108A500844050A43bc5f42d74F"
+    }
+  },
+  "totalFee": {
+    "amount": "2.00",
+    "asset": {
+      "code": "USD"
+    }
+  },
+  "fxRate": "1.03",
+  "indicative": true
+}

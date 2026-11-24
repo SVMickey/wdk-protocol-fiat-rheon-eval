@@ -1,0 +1,15 @@
+{
+  "paymentToken": "eyJ2ZXJzaW9uIjoiRUNfdjEiLCJkYXRhIjoiVWtoRlQwNWZVMEZPUkVKUFdGOVVSVk5VWDFSUFMwVk8iLCJzaWduYXR1cmUiOiJVa2hGVDA1ZlUwRk9SRUpQV0Y5VVJWTlVYMU5KUjA1QlZGVlNSUT09IiwiaGVhZGVyIjp7ImVwaGVtZXJhbFB1YmxpY0tleSI6IlVraEZUMDVmVTBGT1JFSlBXRjlVUlZOVVgwdEZXUT09IiwicHVibGljS2V5SGFzaCI6IlVraEZUMDVmVTBGT1JFSlBXRjlVUlZOVVgwaEJVMGc9IiwidHJhbnNhY3Rpb25JZCI6IjVhNGRiMGMxZTJmMyJ9fQ==",
+  "email": "user-8842@example.com",
+  "firstName": "Alex",
+  "lastName": "Taylor",
+  "billingAddress": {
+    "countryCode": "US",
+    "streetLine1": "Asden Ct",
+    "streetLine2": "123",
+    "stateCode": "OH",
+    "city": "Reynoldsburg",
+    "zipCode": "43068"
+  },
+  "userIp": "8.8.8.8"
+}

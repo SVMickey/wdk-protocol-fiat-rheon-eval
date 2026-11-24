@@ -1,0 +1,17 @@
+{
+  "error": {
+    "code": "no_route",
+    "message": "This route is not available for this user",
+    "requestId": "req_01m3282zfq2c4n6r8t0v2x4z6b",
+    "partnerCode": "country_not_supported",
+    "details": {
+      "reason": "not_available_for_user",
+      "alternativeProduct": "card_onramp"
+    },
+    "retry": {
+      "safe": false,
+      "afterMs": null,
+      "action": "none"
+    }
+  }
+}

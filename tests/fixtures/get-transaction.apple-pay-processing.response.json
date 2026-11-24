@@ -1,0 +1,46 @@
+{
+  "transactionId": "txn_01m3283c7d8e9f0g1h2j3k4m5n",
+  "product": "apple_pay_onramp",
+  "routeId": "rte_01m3283a1b2c3d4e5f6g7h8j9k",
+  "provider": "example_pay",
+  "quoteId": "qte_01m3283b5c6d7e8f9g0h1j2k3m",
+  "customerId": "cus_01m3282x4v7c0m8h3n9k2q7f5e",
+  "status": "processing",
+  "instructions": null,
+  "sourceAmount": {
+    "amount": "100.00",
+    "asset": {
+      "code": "USD"
+    }
+  },
+  "expectedDeliveredAmount": {
+    "amount": "95.120000",
+    "asset": {
+      "code": "USDC",
+      "chain": "base-sepolia",
+      "contract": "0xd25F95273291F9108A500844050A43bc5f42d74F"
+    }
+  },
+  "totalFee": {
+    "amount": "2.00",
+    "asset": {
+      "code": "USD"
+    }
+  },
+  "deliveredAmount": null,
+  "destination": {
+    "walletAddress": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "chain": "base-sepolia"
+  },
+  "source": null,
+  "deliveryProof": null,
+  "failureReason": null,
+  "fundsNotice": null,
+  "sync": {
+    "state": "fresh",
+    "lastKnownStatus": "processing",
+    "lastSyncedAt": "2026-10-02T12:01:10.420Z"
+  },
+  "createdAt": "2026-10-02T12:00:05.100Z",
+  "updatedAt": "2026-10-02T12:01:10.420Z"
+}
