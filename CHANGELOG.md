@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `npm audit` reports no vulnerabilities: the dev dependency jest is pinned to 29.7.0 (jest 30 pulls vulnerable glob and minimatch versions); all tests pass on it.
+- CI runs the packed package on the Bare runtime (`tests/bare/smoke.mjs`).
+- README: the usage example (USDT) comes first; the widget example says why it uses USDC in the sandbox.
 - The generated declaration now includes `getSupportedCountries` (typed `RheonSupportedCountry`), so a strict TypeScript consumer of the package compiles without `skipLibCheck`.
 - `quoteBuy` and `quoteApplePay` refuse a price whose `fxRate` is not a positive decimal string, as `quoteSell` already did.
 - `new RheonProtocol()` with no configuration throws `RheonConfigurationError`; a callback result without a `body` field is a `RheonCallbackError`.

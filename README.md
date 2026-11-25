@@ -6,37 +6,6 @@ Rheon fiat module for WDK (Wallet Development Kit) by Tether. It returns **Rheon
 
 Google Pay is not offered yet. Widget methods are limited to the partner's configured bank, card and hosted Apple Pay routes; the native Apple Pay flow is separate. Availability and payment/KYC checks remain Rheon's, never an SDK promise of acceptance.
 
-## Widget buy and sell
-
-```javascript
-const rheon = new RheonProtocol(account, { request, merchantTransactionId: 'your-buy-order-42' })
-const { buyUrl } = await rheon.buy({
-  cryptoAsset: 'USDC', fiatCurrency: 'EUR', fiatAmount: 5000n,
-  config: { chain: 'base-sepolia', method: 'bank', externalUserId: 'your-user-42' }
-})
-// Open buyUrl. It contains a short-lived, one-use launch token: do not log or share it.
-// Only buyUrl is returned. If you omitted merchantTransactionId, persist rheon.merchantTransactionId.
-// After the user creates a payment in the widget:
-const status = await rheon.getTransactionDetail('your-buy-order-42')
-
-const sellOptions = {
-  cryptoAsset: 'USDC', fiatCurrency: 'EUR', cryptoAmount: 25_000_000n,
-  config: { chain: 'base-sepolia', method: 'bank', merchantTransactionId: 'your-sell-order-43' }
-}
-const estimate = await rheon.quoteSell(sellOptions)
-const { sellUrl } = await rheon.sell(sellOptions)
-```
-
-- Buy/quoteBuy accept **fiat pay amounts**; sell/quoteSell accept **crypto pay amounts**, as integer base units. Exact receive amounts are not supported. The widget locks that amount, fiat, token/chain and wallet. The account address is used unless `recipient` (buy) or `refundAddress` (sell) is given. Selling opens a page; it never signs or sends crypto.
-- `config.method` selects `bank`, `card` or `apple_pay_hosted` (buy only). The widget chooses its provider within that method/corridor; it cannot pin a route, so `buy`/`sell` refuse `config.routeId`. Estimates and native extras can select a route with it. With no method, quotes use the first matching bank or native Apple Pay route.
-- **Card and hosted Apple Pay have no estimate.** Rheon's partner estimate prices bank and native Apple Pay routes only; card and hosted Apple Pay are priced inside the widget, which `buy`/`sell` open. When only card or hosted Apple Pay routes match (by `method`, `routeId` or corridor), `quoteBuy` and `quoteSell` throw `ValueError` ("Rheon prices card and hosted Apple Pay routes only inside its widget, not by estimate: ...") before calling Rheon.
-- An order id can be set in the constructor or per operation (`config.merchantTransactionId`, overriding the constructor). It is 1–180 characters and must not start `txn_` (reserved for native Rheon transaction IDs). One default UUID is generated per instance. **Use one order per instance or supply a new id for each new order.** Persist the id; status works from a fresh instance too.
-- Session creation forwards it as `externalOrderId`. The default idempotency key is `wdk:` plus its SHA-256 digest, so retries use the same key even for Unicode ids. Session replay rotates the launch token before launch; after launch/expiry no usable URL is returned and the module raises `RheonApiError`. Never start another order just to retry a payment with unknown outcome.
-- `getTransactionDetail(merchantTransactionId)` resolves it through `GET /v1/widget/orders?externalOrderId=...`, then reads the standard transaction endpoint. Before a payment exists it throws `NoSuchElementError`; the URL alone is not a payment. Reusing one id for multiple payments yields `ambiguous_order`, never an arbitrary status. Correlation is copied to each widget quote and survives short-lived session deletion; sessions erased before that backend feature cannot be recovered.
-- `quoteSell().fee` is the total fee in **fiat minor units**, converted from Rheon's source-token fee using the same quote's rate, rounded half-up once. Its rate is fiat units per token, truncated to 18 decimal places. Original amounts/rate/fee stay in `metadata`. No JavaScript floating-point money arithmetic is used.
-- `returnUrl`, `cancelUrl`, `locale` and `externalUserId` are optional operation config fields. Return pages must be on the partner's allowed websites. Bank KYC needs a user identity; the widget collects the remaining fields.
-- `examples/widget.js` generates a link through the callback backend and prints the order id. It does not launch the widget or make a payment, and it does not print the one-use link unless you set `SHOW_LINK=1`; it prints an estimate first for `bank` only, since the widget prices card and hosted Apple Pay itself. It defaults to sandbox usage; route/payment availability is controlled on the backend. Rheon's sandbox widget routes are bank routes for USDC on `base-sepolia` with EUR, so the examples above and the script use `method: 'bank'`; set `JOURNEY=sell` for a sell link and `PAYMENT_METHOD=card` or `apple_pay_hosted` (buy only) for an account with those routes.
-
 ## Compatibility
 
 `RheonProtocol` implements the `IFiatProtocol` interface (`FiatProtocol` from `@tetherto/wdk-wallet/protocols`), tested against `@tetherto/wdk-wallet` `1.0.0-beta.26` (dependency range `^1.0.0-beta.26`).
@@ -198,13 +167,46 @@ Amounts are `number | bigint` in base units: cents for fiat (ISO 4217 decimals, 
 - `quoteBuy` is Rheon's estimate, without a user: it does not tell whether the user gets native Apple Pay, and the user's quote can differ. Use `quoteApplePay` for the price the user pays.
 - A price for another amount or other assets than requested is refused.
 
+## Widget buy and sell
+
+This example uses USDC because Rheon's sandbox widget routes are bank routes for USDC on `base-sepolia` with EUR; with an account that has USDT widget routes, use `cryptoAsset: 'USDT'` and its chain.
+
+```javascript
+const rheon = new RheonProtocol(account, { request, merchantTransactionId: 'your-buy-order-42' })
+const { buyUrl } = await rheon.buy({
+  cryptoAsset: 'USDC', fiatCurrency: 'EUR', fiatAmount: 5000n,
+  config: { chain: 'base-sepolia', method: 'bank', externalUserId: 'your-user-42' }
+})
+// Open buyUrl. It contains a short-lived, one-use launch token: do not log or share it.
+// Only buyUrl is returned. If you omitted merchantTransactionId, persist rheon.merchantTransactionId.
+// After the user creates a payment in the widget:
+const status = await rheon.getTransactionDetail('your-buy-order-42')
+
+const sellOptions = {
+  cryptoAsset: 'USDC', fiatCurrency: 'EUR', cryptoAmount: 25_000_000n,
+  config: { chain: 'base-sepolia', method: 'bank', merchantTransactionId: 'your-sell-order-43' }
+}
+const estimate = await rheon.quoteSell(sellOptions)
+const { sellUrl } = await rheon.sell(sellOptions)
+```
+
+- Buy/quoteBuy accept **fiat pay amounts**; sell/quoteSell accept **crypto pay amounts**, as integer base units. Exact receive amounts are not supported. The widget locks that amount, fiat, token/chain and wallet. The account address is used unless `recipient` (buy) or `refundAddress` (sell) is given. Selling opens a page; it never signs or sends crypto.
+- `config.method` selects `bank`, `card` or `apple_pay_hosted` (buy only). The widget chooses its provider within that method/corridor; it cannot pin a route, so `buy`/`sell` refuse `config.routeId`. Estimates and native extras can select a route with it. With no method, quotes use the first matching bank or native Apple Pay route.
+- **Card and hosted Apple Pay have no estimate.** Rheon's partner estimate prices bank and native Apple Pay routes only; card and hosted Apple Pay are priced inside the widget, which `buy`/`sell` open. When only card or hosted Apple Pay routes match (by `method`, `routeId` or corridor), `quoteBuy` and `quoteSell` throw `ValueError` ("Rheon prices card and hosted Apple Pay routes only inside its widget, not by estimate: ...") before calling Rheon.
+- An order id can be set in the constructor or per operation (`config.merchantTransactionId`, overriding the constructor). It is 1–180 characters and must not start `txn_` (reserved for native Rheon transaction IDs). One default UUID is generated per instance. **Use one order per instance or supply a new id for each new order.** Persist the id; status works from a fresh instance too.
+- Session creation forwards it as `externalOrderId`. The default idempotency key is `wdk:` plus its SHA-256 digest, so retries use the same key even for Unicode ids. Session replay rotates the launch token before launch; after launch/expiry no usable URL is returned and the module raises `RheonApiError`. Never start another order just to retry a payment with unknown outcome.
+- `getTransactionDetail(merchantTransactionId)` resolves it through `GET /v1/widget/orders?externalOrderId=...`, then reads the standard transaction endpoint. Before a payment exists it throws `NoSuchElementError`; the URL alone is not a payment. Reusing one id for multiple payments yields `ambiguous_order`, never an arbitrary status. Correlation is copied to each widget quote and survives short-lived session deletion; sessions erased before that backend feature cannot be recovered.
+- `quoteSell().fee` is the total fee in **fiat minor units**, converted from Rheon's source-token fee using the same quote's rate, rounded half-up once. Its rate is fiat units per token, truncated to 18 decimal places. Original amounts/rate/fee stay in `metadata`. No JavaScript floating-point money arithmetic is used.
+- `returnUrl`, `cancelUrl`, `locale` and `externalUserId` are optional operation config fields. Return pages must be on the partner's allowed websites. Bank KYC needs a user identity; the widget collects the remaining fields.
+- `examples/widget.js` generates a link through the callback backend and prints the order id. It does not launch the widget or make a payment, and it does not print the one-use link unless you set `SHOW_LINK=1`; it prints an estimate first for `bank` only, since the widget prices card and hosted Apple Pay itself. It defaults to sandbox usage; route/payment availability is controlled on the backend. Rheon's sandbox widget routes are bank routes for USDC on `base-sepolia` with EUR, so the examples above and the script use `method: 'bank'`; set `JOURNEY=sell` for a sell link and `PAYMENT_METHOD=card` or `apple_pay_hosted` (buy only) for an account with those routes.
+
 ## Configuration
 
 | Option | Type | Default | Description |
 |---|---|---|---|
 | `request` | `(request: RheonRequest) => Promise<RheonResponse>` | required | Sends one call to Rheon's partner API from your backend. |
 | `cacheTime` | `number` | `600000` | How long, in ms, your account's routes (`GET /v1/config`) are cached. |
-| `assetDecimals` | `Record<string, number>` | built-in table | On-chain decimals by `<code>:<chain>` in Rheon's codes (e.g. `{ 'USDC:arbitrum': 6 }`), added to the built-in table. |
+| `assetDecimals` | `Record<string, number>` | built-in table | On-chain decimals by `<code>:<chain>` in Rheon's codes (e.g. `{ 'USDT:arbitrum': 6 }`), added to the built-in table. |
 | `merchantTransactionId` | `string` | generated UUID | Default widget order id; persist it for status lookup. Override per operation for a new order. |
 
 Per call, under `config`:

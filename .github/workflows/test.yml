@@ -36,3 +36,9 @@ jobs:
           npm init -y >/dev/null
           npm install --no-audit "$RUNNER_TEMP"/wdk-protocol-fiat-rheon-*.tgz
           "$GITHUB_WORKSPACE/node_modules/.bin/tsc" --strict --module NodeNext --moduleResolution NodeNext --target ES2022 --noEmit consumer.mts
+      - name: Packed package runs on the Bare runtime
+        run: |
+          cp tests/bare/smoke.mjs "$RUNNER_TEMP/consumer/"
+          cd "$RUNNER_TEMP/consumer"
+          npm install --no-audit bare@1.38.0
+          node node_modules/bare/bin/bare smoke.mjs
