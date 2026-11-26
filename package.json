@@ -12,7 +12,7 @@
   ],
   "author": "Rheon",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "Apache-2.0",
   "main": "index.js",
   "type": "module",
   "types": "./types",

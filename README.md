@@ -290,4 +290,4 @@ Questions and integration help: hello@rheon.io. Security problems: see [SECURITY
 
 ## License
 
-Rheon Evaluation License: internal evaluation and testing only, no redistribution or production use. See [LICENSE](LICENSE).
+Apache License 2.0. See [LICENSE](LICENSE).

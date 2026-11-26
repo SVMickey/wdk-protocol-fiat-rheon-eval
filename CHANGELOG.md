@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: the contract of the `request` backend callback (what it receives, what it must resolve to, what a production backend should check) and how to build the Apple Pay sheet from `applePay` and the submit from the authorized payment.
 - Examples: `examples/backend.js` (the backend callback with a path allowlist, forwarding widget calls without browser fetch headers), `examples/wallet.js` (one whole native Apple Pay purchase in the sandbox) and `examples/widget.js` (a sandbox buy or sell estimate and widget link, with `JOURNEY` and `PAYMENT_METHOD`, default `bank`, the method of Rheon's sandbox widget routes).
 
+### Changed
+
+- Licensed under the Apache License 2.0 (`LICENSE`, `"license": "Apache-2.0"` in `package.json`, Apache headers in the source files), replacing the evaluation licence.
+
 ### Fixed
 
 - `npm audit` reports no vulnerabilities: the dev dependency jest is pinned to 29.7.0 (jest 30 pulls vulnerable glob and minimatch versions); all tests pass on it.
